@@ -1,7 +1,7 @@
 import prerequisites  # Load prerequisites
 from prerequisites import *
 
-# Set up device configuration
+# Set up device configuration for GPU 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Define paths for datasets
@@ -56,7 +56,7 @@ def objective(trial):
     eval_loader = DataLoader(eval_dataset, batch_size=batch_size, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    # Model setup
+    # Model setup, need to alter for Cond diffusion
     unet1 = NullUnet()
     unet2 = Unet(dim=128, dim_mults=(1, 2, 4, 8), layer_attns=(False, False, False, True), layer_cross_attns=(False, False, False, True))
     imagen = Imagen(condition_on_text=False, unets=[unet1, unet2], channels=1, image_sizes=(16, 160), timesteps=timesteps)
